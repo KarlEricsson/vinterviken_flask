@@ -6,3 +6,4 @@ class Court(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     available = db.Column(db.Boolean, default=True)
     booked = db.Column(db.Boolean, default=False)
+    booked2h = db.Column(db.Boolean, default=False)

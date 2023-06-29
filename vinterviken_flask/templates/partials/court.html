@@ -1,0 +1,14 @@
+<div id="court_{{ context }}-{{ court.id }}" style="display: inline-block; margin: 10px;">
+    <p>Court {{ court.id }}</p>
+    {% if context == 'available' %}
+    <div style="width: 100px; height: 100px; background-color: {{ 'green' if court.available else 'red' }};"></div>
+    <button hx-post="{{ url_for('toggle_status', context=context, court_id=court.id) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Occupied' if court.available else 'Available' }}</button>
+    {% elif context == 'booked' %}
+    <div style="width: 100px; height: 100px; background-color: {{ 'red' if court.booked else 'green' }};"></div>
+    <button hx-post="{{ url_for('toggle_status', context=context, court_id=court.id) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Unbook' if court.booked else 'Book' }}</button>
+    {% elif context == 'booked2h' %}
+    <div style="width: 100px; height: 100px; background-color: {{ 'red' if court.booked2h else 'green' }};"></div>
+    <button hx-post="{{ url_for('toggle_status', context=context, court_id=court.id) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Unbook' if court.booked2h else 'Book' }}</button>
+    {% endif %}
+
+</div>

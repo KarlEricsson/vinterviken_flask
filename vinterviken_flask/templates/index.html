@@ -6,12 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
     <title>Vinterviken Status</title>
 </head>
 <body>
-{% include 'courtnow.html' %}
+<h4>Updated: {{updated_time}}</h4>
+<h3>Current court status:</h3> 
+{{ render_partial('partials/court_context.html', courts=courts, context='available') }}
 <br>
-{% include 'courtnext.html' %}
+<h3>Next hour court status:</h3>
+{{ render_partial('partials/court_context.html', courts=courts, context='booked') }}
+<br>
+<h3>Two hour court status:</h3>
+{{ render_partial('partials/court_context.html', courts=courts, context='booked2h') }}
 </body>
 </html>
