@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "flask~=2.3.2",
     "flask-sqlalchemy~=3.0.5",
+    "jinja-partials~=0.1.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.10"
