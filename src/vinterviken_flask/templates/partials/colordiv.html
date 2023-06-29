@@ -1,0 +1,5 @@
+<div id="court-{{ court.id }}" style="display: inline-block; margin: 10px;">
+    <div style="width: 100px; height: 100px; background-color: {{ 'green' if court.available else 'red' }};"></div>
+    <p>Court {{ court.id }}</p>
+    <button hx-post="{{ url_for('toggle_availability', court_id=court.id) }}" hx-swap="outerHTML" hx-target="#court-{{ court.id }}">Toggle Availability</button>
+</div>
