@@ -18,22 +18,11 @@ def create_app():
         courts = db.session.execute(db.select(Court).order_by(Court.id)).scalars().all()
         return render_template('index.html', courts=courts, updated_time=updated_time)
 
-    @app.route('/toggle_availability/<int:court_id>', methods=['POST'])
-    def toggle_availability(court_id):
-        court = Court.query.get(court_id)
-        if court:
-            court.available = not court.available
-            db.session.commit()
-        return render_template('partials/colordiv.html', court=court)
-
     @app.route('/toggle_status/<context>/<int:court_id>', methods=['POST'])
     def toggle_status(context:str, court_id):    
         court = Court.query.get(court_id)
         if context in ALLOWED_ATTRIBUTES and court:
-            #current_value = getattr(court, context)
-            #setattr(court, context, not current_value)
             setattr(court, context, not getattr(court, context))
-            #court.booked = not court.booked
             db.session.commit()
         return render_template('partials/court.html', context=context, court=court)
 
