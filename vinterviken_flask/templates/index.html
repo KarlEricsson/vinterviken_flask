@@ -14,13 +14,13 @@
 <div hx-ext="sse" sse-connect="/events" sse-swap="message">
 </div>
 
-<h3>Current court status:</h3> 
+<h4>Current court status:</h4>
 {{ render_partial('partials/court_context.html', courts=courts, context='available') }}
 <br>
-<h3>Next hour court status:</h3>
+<h4>Next hour court status:</h4>
 {{ render_partial('partials/court_context.html', courts=courts, context='booked') }}
 <br>
-<h3>Two hour court status:</h3>
+<h4>Two hour court status:</h4>
 {{ render_partial('partials/court_context.html', courts=courts, context='booked2h') }}
 </body>
 </html>
