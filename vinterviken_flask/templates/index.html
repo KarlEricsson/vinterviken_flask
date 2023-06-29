@@ -7,10 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
     <title>Vinterviken Status</title>
 </head>
 <body>
-<h4>Updated: {{updated_time}}</h4>
+<div hx-ext="sse" sse-connect="/events" sse-swap="message">
+</div>
+
 <h3>Current court status:</h3> 
 {{ render_partial('partials/court_context.html', courts=courts, context='available') }}
 <br>
