@@ -1,4 +1,5 @@
-from .models import db, Court
+from .models import Court, db
+
 
 def create_db(app):
     db.init_app(app)

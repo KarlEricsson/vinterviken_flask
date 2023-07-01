@@ -24,3 +24,28 @@ managed = true
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+select = ["ALL"]
+ignore = [
+  # Ignore missing docstring warnings
+  "D",
+  # Ignore missing type annotations
+  "ANN",
+  # Ignore warning of commented-out code
+  "ERA",
+  # Ignore flake8-use-pathlib
+  "PTH",
+  # Allow print statements
+  "T",
+  # Ignore missing issue link on TODO:
+  #"TD003"
+  # Unnecessary open mode parameters
+  "UP015",
+  ]
+unfixable = [
+  # Don't touch unused imports
+  "F401",
+]
