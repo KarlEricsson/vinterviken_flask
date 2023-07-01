@@ -29,8 +29,7 @@ def create_app():
         global updated_time
         updated_queue.put(datetime.now().replace(microsecond=0))
         updated_time = datetime.now().replace(microsecond=0)
-        court = db.session.execute(db.select(Court).filter_by(username=username)).scalar_one()
-        court = Court.query.get(court_id)
+        court = db.session.get(Court, court_id)
         if context in ALLOWED_ATTRIBUTES and court:
             setattr(court, context, not getattr(court, context))
             db.session.commit()
