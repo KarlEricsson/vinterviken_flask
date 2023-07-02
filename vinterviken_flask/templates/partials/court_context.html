@@ -1,5 +1,5 @@
 <div id="courts_{{context}}">
-        {% for court in courts %}
+        {% for court in courts.values() %}
             {{ render_partial('partials/court.html', court=court, context=context) }}
         {% endfor %}
     </div>

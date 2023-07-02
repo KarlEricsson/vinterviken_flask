@@ -1,14 +1,14 @@
-<div id="court_{{ context }}-{{ court.id }}" style="display: inline-flex; flex-direction: column; align-items: center; margin: 6px;">
-    <p>Court {{ court.id }}</p>
+<div id="court_{{ context }}-{{ court.name }}" style="display: inline-flex; flex-direction: column; align-items: center; margin: 6px;">
+    <p>{{ court.name }}</p>
     {% if context == 'available' %}
     <div style="width: 70px; height: 80px; background-color: {{ 'green' if court.available else 'red' }};"></div>
-    <button hx-post="{{ url_for('toggle_status', context=context, court_id=court.id) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Occupied' if court.available else 'Available' }}</button>
+    <button hx-post="{{ url_for('toggle_status', context=context, court_name=court.name) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Occupied' if court.available else 'Available' }}</button>
     {% elif context == 'booked' %}
     <div style="width: 70px; height: 80px; background-color: {{ 'red' if court.booked else 'green' }};"></div>
-    <button hx-post="{{ url_for('toggle_status', context=context, court_id=court.id) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Unbook' if court.booked else 'Book' }}</button>
+    <button hx-post="{{ url_for('toggle_status', context=context, court_name=court.name) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Unbook' if court.booked else 'Book' }}</button>
     {% elif context == 'booked2h' %}
     <div style="width: 70px; height: 80px; background-color: {{ 'red' if court.booked2h else 'green' }};"></div>
-    <button hx-post="{{ url_for('toggle_status', context=context, court_id=court.id) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Unbook' if court.booked2h else 'Book' }}</button>
+    <button hx-post="{{ url_for('toggle_status', context=context, court_name=court.name) }}" hx-swap="outerHTML" hx-target="closest div">{{ 'Unbook' if court.booked2h else 'Book' }}</button>
     {% endif %}
 
 </div>

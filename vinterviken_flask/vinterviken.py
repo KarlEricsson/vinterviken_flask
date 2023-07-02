@@ -4,11 +4,9 @@ from datetime import datetime
 import jinja_partials
 from flask import Flask, Response, render_template
 
-from .db import create_db
-from .models import Court, db
+from .models import Court
 
 ALLOWED_ATTRIBUTES = {"booked", "available", "booked2h"}
-updated_time = "Not updated since server restart."
 updated_queue = queue.Queue(maxsize=1)
 
 
@@ -17,22 +15,20 @@ def create_app():
     jinja_partials.register_extensions(app)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
-    create_db(app)
+    court_names = ("Grusbanan", "Mittbanan", "Skogsbanan")
+    courts = {name: Court(name) for name in court_names}
 
     @app.route("/")
     def index():
-        courts = db.session.execute(db.select(Court).order_by(Court.id)).scalars().all()
-        return render_template("index.html", courts=courts, updated_time=updated_time)
+        return render_template("index.html", courts=courts)
 
-    @app.route("/toggle_status/<context>/<int:court_id>", methods=["POST"])
-    def toggle_status(context: str, court_id):
-        global updated_time
+    @app.route("/toggle_status/<context>/<court_name>", methods=["POST"])
+    def toggle_status(context: str, court_name):
         updated_queue.put(datetime.now().replace(microsecond=0))
-        updated_time = datetime.now().replace(microsecond=0)
-        court = db.session.get(Court, court_id)
+        court = courts[court_name]
+        court.update_time(datetime.now().replace(microsecond=0))
         if context in ALLOWED_ATTRIBUTES and court:
             setattr(court, context, not getattr(court, context))
-            db.session.commit()
         return render_template("partials/court.html", context=context, court=court)
 
     @app.route("/events")

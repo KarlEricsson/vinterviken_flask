@@ -12,7 +12,7 @@
 </head>
 <body>
 <div hx-ext="sse" sse-connect="/events" sse-swap="message">
-{{ updated_time }}
+{{ courts["Grusbanan"].updated_time }}
 </div>
 <h4>Current court status:</h4>
 {{ render_partial('partials/court_context.html', courts=courts, context='available') }}
