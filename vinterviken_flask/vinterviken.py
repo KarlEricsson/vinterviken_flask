@@ -1,4 +1,3 @@
-import queue
 from datetime import datetime
 
 import jinja_partials
