@@ -22,6 +22,9 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
+dev-dependencies = [
+    "watchdog~=3.0.0",
+]
 
 [tool.hatch.metadata]
 allow-direct-references = true
