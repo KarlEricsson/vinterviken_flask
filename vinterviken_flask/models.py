@@ -1,3 +1,6 @@
+import queue
+
+
 class Court:
     updated_time = "Not updated since server restart."
 
@@ -12,4 +15,18 @@ class Court:
 
     #def get_update_time(self):
     #    return Court.update_time()
+
+class MessengerQueue:
+    listeners = []
+
+    def new_listener(self):
+        q = queue.Queue(maxsize=2)
+        self.listeners.append(q)
+        q.put(Court.updated_time)
+        return q
+
+    def update_listeners(self, update_time):
+        for listener in self.listeners:
+            listener.put(update_time)
+
 

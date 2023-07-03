@@ -4,10 +4,10 @@ from datetime import datetime
 import jinja_partials
 from flask import Flask, Response, render_template
 
-from .models import Court
+from .models import Court, MessengerQueue
 
 ALLOWED_ATTRIBUTES = {"booked", "available", "booked2h"}
-updated_queue = queue.Queue(maxsize=1)
+updated_queue = MessengerQueue()
 
 
 def create_app():
@@ -24,8 +24,8 @@ def create_app():
 
     @app.route("/toggle_status/<context>/<court_name>", methods=["POST"])
     def toggle_status(context: str, court_name):
-        updated_queue.put(datetime.now().replace(microsecond=0))
         court = courts[court_name]
+        updated_queue.update_listeners(datetime.now().replace(microsecond=0))
         court.update_time(datetime.now().replace(microsecond=0))
         if context in ALLOWED_ATTRIBUTES and court:
             setattr(court, context, not getattr(court, context))
@@ -34,8 +34,9 @@ def create_app():
     @app.route("/events")
     def event():
         def stream():
+            stream_queue = updated_queue.new_listener()
             while True:
-                msg = f"data: <h4>Updated: {updated_queue.get()}</h4>\n\n"
+                msg = f"data: <h4>Updated: {stream_queue.get()}</h4>\n\n"
                 yield msg
 
         return Response(stream(), mimetype="text/event-stream")
