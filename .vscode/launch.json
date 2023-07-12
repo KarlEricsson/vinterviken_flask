@@ -5,6 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Flask gunicorn",
+            "type": "python",
+            "request": "launch",
+            "program": ".venv/bin/gunicorn",
+            "env": {
+                "FLASK_APP": "vinterviken_flask",
+                "FLASK_DEBUG": "1",
+                "GEVENT_SUPPORT": "True"
+            },
+            "args": [
+                "-w=1",
+                "--worker-class=gevent",
+                "--bind=0.0.0.0",
+                "--access-logfile=-",
+                "--keep-alive=120",
+                "vinterviken_flask:create_app()"
+            ],
+            "jinja": true,
+            "justMyCode": true
+        },
+        {
             "name": "Python: Flask",
             "type": "python",
             "request": "launch",
@@ -16,7 +37,8 @@
             "args": [
                 "run",
                 "--no-debugger",
-                "--no-reload"
+                "--no-reload",
+                "--host=0.0.0.0"
             ],
             "jinja": true,
             "justMyCode": true
