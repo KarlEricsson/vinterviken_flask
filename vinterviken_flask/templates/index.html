@@ -11,9 +11,10 @@
     <title>Vinterviken Status</title>
 </head>
 <body>
-<div hx-ext="sse" sse-connect="/events" sse-swap="message">
-{{ courts["Grusbanan"].updated_time }}
-</div>
+<div hx-ext="sse" sse-connect="/events">
+<div id="updated"> {{ courts['Grusbanan'].updated_time }} </div>
+
+<div hx-get="/get_all_courts" hx-trigger="sse:update">
 <h4>Current court status:</h4>
 {{ render_partial('partials/court_context.html', courts=courts, context='available') }}
 <br>
@@ -22,5 +23,8 @@
 <br>
 <h4>Two hour court status:</h4>
 {{ render_partial('partials/court_context.html', courts=courts, context='booked2h') }}
+</div>
+
+</div> 
 </body>
 </html>

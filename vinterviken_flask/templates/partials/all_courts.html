@@ -1,0 +1,10 @@
+<h4>Current court status:</h4>
+{{ render_partial('partials/court_context.html', courts=courts, context='available') }}
+<br>
+<h4>Next hour court status:</h4>
+{{ render_partial('partials/court_context.html', courts=courts, context='booked') }}
+<br>
+<h4>Two hour court status:</h4>
+{{ render_partial('partials/court_context.html', courts=courts, context='booked2h') }}
+
+<div id="updated" hx-swap-oob="#updated"> {{ courts['Grusbanan'].updated_time }} </div>

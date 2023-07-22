@@ -17,16 +17,22 @@ class Court:
     #    return Court.update_time()
 
 class MessengerQueue:
-    listeners = []
+    listeners: list[queue.Queue] = []
 
-    def new_listener(self):
-        q = queue.Queue(maxsize=2)
+    def new_listener(self, request_addr):
+        request_addr = request_addr
+        q = queue.Queue(maxsize=1)
         self.listeners.append(q)
-        q.put(Court.updated_time)
+        q.put({"addr": request_addr, "msg": Court.updated_time})
         return q
 
-    def update_listeners(self, update_time):
-        for listener in self.listeners:
-            listener.put(update_time)
+    def update_listeners(self, update_time, request_addr):
+        request_addr = request_addr
+        for i in reversed(range(len(self.listeners))):
+            try:
+                self.listeners[i].put_nowait({"addr": request_addr, "msg": update_time})
+            except queue.Full:
+                del self.listeners[i]
+
 
 
